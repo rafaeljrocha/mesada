@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block titulo %}{{ titulo }}{% endblock %}
+{% block conteudo %}
+<section class="cartao centro">
+  <h1>{{ titulo }}</h1>
+  {% if mensagem %}<p>{{ mensagem }}</p>{% endif %}
+  <p><a class="botao" href="{{ url_for('auth.inicio') }}">Voltar ao início</a></p>
+</section>
+{% endblock %}

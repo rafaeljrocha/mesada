@@ -1,0 +1,17 @@
+{% extends "pais/_layout.html" %}
+{% from "_macros.html" import campo %}
+{% block titulo %}Novo responsável{% endblock %}
+{% block conteudo %}
+<section class="cartao estreito">
+  <h1>Novo responsável</h1>
+  <p>Terá as mesmas permissões que você.</p>
+  <form method="post" novalidate>
+    {{ form.hidden_tag() }}
+    {{ campo(form.nome) }}
+    {{ campo(form.email, autocomplete="off") }}
+    {{ campo(form.senha, autocomplete="new-password", dica="Informe pessoalmente. A pessoa pode trocar depois em Família.") }}
+    <button class="botao botao-primario" type="submit">Cadastrar</button>
+    <a class="botao" href="{{ url_for('pais.responsaveis') }}">Cancelar</a>
+  </form>
+</section>
+{% endblock %}

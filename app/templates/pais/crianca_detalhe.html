@@ -1,0 +1,75 @@
+{% extends "pais/_layout.html" %}
+{% from "_macros.html" import campo, avatar %}
+{% block titulo %}{{ crianca.nome }}{% endblock %}
+{% block conteudo %}
+<div class="cabecalho-pagina">
+  <div class="titulo-com-avatar">{{ avatar(crianca, "avatar avatar-pequeno") }}<h1>{{ crianca.nome }}</h1></div>
+  <a class="botao" href="{{ url_for('pais.crianca_editar', crianca_id=crianca.id) }}">Editar</a>
+</div>
+
+<div class="grade">
+  <section class="cartao"><h2>⭐ Pontos</h2><p class="saldo-grande">{{ saldos['PONTOS'] | pontos }}</p></section>
+  <section class="cartao"><h2>💰 Reais</h2><p class="saldo-grande">{{ saldos['BRL'] | brl }}</p></section>
+</div>
+
+{% if crianca.ativo %}
+<details class="cartao">
+  <summary>Ajuste manual</summary>
+  <form method="post" action="{{ url_for('pais.crianca_ajuste', crianca_id=crianca.id) }}" novalidate>
+    {{ ajuste_form.hidden_tag() }}
+    <div class="linha">
+      {{ campo(ajuste_form.direcao) }}
+      {{ campo(ajuste_form.unidade) }}
+      {{ campo(ajuste_form.valor, inputmode="decimal", autocomplete="off") }}
+    </div>
+    {{ campo(ajuste_form.motivo, rows=2) }}
+    <button class="botao botao-primario" type="submit">Registrar ajuste</button>
+  </form>
+</details>
+{% endif %}
+
+<section class="cartao">
+  <div class="cabecalho-pagina">
+    <h2>Extrato</h2>
+    <nav class="filtros" aria-label="Filtrar por unidade">
+      <a href="{{ url_for('pais.crianca_detalhe', crianca_id=crianca.id) }}" {% if not unidade %}aria-current="page"{% endif %}>Tudo</a>
+      <a href="{{ url_for('pais.crianca_detalhe', crianca_id=crianca.id, unidade='PONTOS') }}" {% if unidade == 'PONTOS' %}aria-current="page"{% endif %}>Pontos</a>
+      <a href="{{ url_for('pais.crianca_detalhe', crianca_id=crianca.id, unidade='BRL') }}" {% if unidade == 'BRL' %}aria-current="page"{% endif %}>R$</a>
+    </nav>
+  </div>
+  <div class="tabela-rolavel">
+  <table class="tabela">
+    <thead><tr><th>Data</th><th>Tipo</th><th>Valor</th><th>Observação</th><th>Por</th><th></th></tr></thead>
+    <tbody>
+    {% for l in lancamentos %}
+      <tr class="{% if l.id in estornados %}estornado{% endif %}">
+        <td>{{ l.criado_em | data_hora }}</td>
+        <td>{{ l.tipo | rotulo_tipo }}{% if l.estorno_de_id %} de #{{ l.estorno_de_id }}{% endif %}</td>
+        <td class="{{ 'positivo' if l.valor > 0 else 'negativo' }}">
+          {{ (l.valor | brl) if l.unidade == 'BRL' else (l.valor | pontos) }}
+        </td>
+        <td>{{ l.observacao or '' }}</td>
+        <td>{{ l.autor.nome if l.autor else 'Sistema' }}</td>
+        <td>
+          {% if l.tipo != 'ESTORNO' and l.id not in estornados %}
+            <details>
+              <summary>Estornar</summary>
+              <form method="post" action="{{ url_for('pais.lancamento_estornar', lancamento_id=l.id) }}">
+                {{ estorno_form.hidden_tag() }}
+                {{ estorno_form.motivo(rows=2, required=True, placeholder="Motivo") }}
+                <button class="botao" type="submit">Confirmar estorno</button>
+              </form>
+            </details>
+          {% elif l.id in estornados %}
+            <small>estornado</small>
+          {% endif %}
+        </td>
+      </tr>
+    {% else %}
+      <tr><td colspan="6">Nenhum lançamento.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+{% endblock %}

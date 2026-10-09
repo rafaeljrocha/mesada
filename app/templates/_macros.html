@@ -1,0 +1,32 @@
+{% macro mensagens() %}
+  {% with msgs = get_flashed_messages(with_categories=true) %}
+    {% if msgs %}
+      <div class="mensagens" role="status">
+        {% for categoria, msg in msgs %}
+          <p class="mensagem mensagem-{{ categoria }}">{{ msg }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+{% endmacro %}
+
+{% macro campo(field, dica=None) %}
+  <div class="campo {% if field.type == 'BooleanField' %}campo-check{% endif %}">
+    {% if field.type == 'BooleanField' %}
+      <label>{{ field(**kwargs) }} {{ field.label.text }}</label>
+    {% else %}
+      {{ field.label }}
+      {{ field(**kwargs) }}
+    {% endif %}
+    {% if dica %}<small class="dica">{{ dica }}</small>{% endif %}
+    {% for erro in field.errors %}<small class="erro">{{ erro }}</small>{% endfor %}
+  </div>
+{% endmacro %}
+
+{% macro avatar(crianca, classe="avatar") %}
+  {% if crianca.foto %}
+    <img class="{{ classe }}" src="{{ url_for('midia.arquivo', caminho=crianca.foto) }}" alt="{{ crianca.nome }}">
+  {% else %}
+    <span class="{{ classe }} avatar-inicial" data-cor="{{ crianca.cor_avatar }}" role="img" aria-label="{{ crianca.nome }}">{{ crianca.inicial }}</span>
+  {% endif %}
+{% endmacro %}

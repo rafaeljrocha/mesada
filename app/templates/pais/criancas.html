@@ -1,0 +1,32 @@
+{% extends "pais/_layout.html" %}
+{% from "_macros.html" import avatar %}
+{% block titulo %}Crianças{% endblock %}
+{% block conteudo %}
+<div class="cabecalho-pagina">
+  <h1>Crianças</h1>
+  <a class="botao botao-primario" href="{{ url_for('pais.crianca_nova') }}">+ Nova criança</a>
+</div>
+<ul class="lista">
+  {% for c in criancas %}
+    <li class="item {% if not c.ativo %}inativo{% endif %}">
+      {{ avatar(c, "avatar avatar-pequeno") }}
+      <div class="item-texto">
+        <strong>{{ c.nome }}</strong>
+        {% if c.data_nascimento %}<small>{{ c.data_nascimento | data }}</small>{% endif %}
+        {% if not c.ativo %}<small>(inativa)</small>{% endif %}
+      </div>
+      <div class="item-acoes">
+        <a class="botao" href="{{ url_for('pais.crianca_detalhe', crianca_id=c.id) }}">Extrato</a>
+        <a class="botao" href="{{ url_for('pais.crianca_editar', crianca_id=c.id) }}">Editar</a>
+        <form method="post" action="{{ url_for('pais.crianca_alternar_ativo', crianca_id=c.id) }}"
+              data-confirmar="{{ 'Desativar' if c.ativo else 'Reativar' }} {{ c.nome }}?">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="botao" type="submit">{{ 'Desativar' if c.ativo else 'Reativar' }}</button>
+        </form>
+      </div>
+    </li>
+  {% else %}
+    <li class="item">Nenhuma criança cadastrada.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

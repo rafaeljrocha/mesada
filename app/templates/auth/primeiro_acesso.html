@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from "_macros.html" import campo %}
+{% block titulo %}Criar família{% endblock %}
+{% block conteudo %}
+<section class="cartao estreito">
+  <h1>Criar família</h1>
+  <p>Cadastre a família e o primeiro responsável. Depois você poderá incluir outro responsável e as crianças.</p>
+  <form method="post" novalidate>
+    {{ form.hidden_tag() }}
+    {{ campo(form.nome_familia) }}
+    {{ campo(form.nome) }}
+    {{ campo(form.email, autocomplete="username") }}
+    {{ campo(form.senha, autocomplete="new-password") }}
+    {{ campo(form.confirmar_senha, autocomplete="new-password") }}
+    {{ campo(form.pin, inputmode="numeric", autocomplete="off", dica="O PIN protege a área dos pais quando o aparelho estiver com a criança.") }}
+    {{ campo(form.confirmar_pin, inputmode="numeric", autocomplete="off") }}
+    <button class="botao botao-primario" type="submit">Criar família</button>
+  </form>
+</section>
+{% endblock %}

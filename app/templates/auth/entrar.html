@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% from "_macros.html" import campo %}
+{% block titulo %}Entrar{% endblock %}
+{% block conteudo %}
+<section class="cartao estreito">
+  <h1>⭐ Mesada</h1>
+  <form method="post" novalidate>
+    {{ form.hidden_tag() }}
+    {{ campo(form.email, autocomplete="username") }}
+    {{ campo(form.senha, autocomplete="current-password") }}
+    <button class="botao botao-primario" type="submit">Entrar</button>
+  </form>
+  {% if cadastro_aberto %}
+    <p class="centro"><a href="{{ url_for('auth.primeiro_acesso') }}">Cadastrar nova família</a></p>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "crianca/_layout.html" %}
+{% from "_macros.html" import avatar %}
+{% block titulo %}Quem é você?{% endblock %}
+{% block conteudo %}
+<h1 class="titulo-crianca"><span aria-hidden="true">👋</span> <span class="visualmente-oculto">Quem é você?</span></h1>
+<div class="selecao-perfis">
+  {% for c in criancas %}
+    <a class="perfil" href="{{ url_for('crianca.inicio', crianca_id=c.id) }}" aria-label="{{ c.nome }}">
+      {{ avatar(c, "avatar avatar-gigante") }}
+      <span class="perfil-nome">{{ c.nome }}</span>
+    </a>
+  {% else %}
+    <p>Peça para o papai ou a mamãe cadastrar você.</p>
+  {% endfor %}
+</div>
+{% endblock %}

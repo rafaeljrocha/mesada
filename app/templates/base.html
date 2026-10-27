@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2f6fed">
+  <title>{% block titulo %}Mesada{% endblock %} · Mesada RC</title>
+  <link rel="icon" href="{{ url_for('static', filename='img/icone.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+<body class="{% block classe_body %}area-pais{% endblock %}">
+  {% block topo %}{% endblock %}
+  <main class="conteudo">
+    {% from "_macros.html" import mensagens %}
+    {{ mensagens() }}
+    {% block conteudo %}{% endblock %}
+  </main>
+</body>
+</html>

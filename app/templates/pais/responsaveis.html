@@ -1,0 +1,28 @@
+{% extends "pais/_layout.html" %}
+{% block titulo %}Responsáveis{% endblock %}
+{% block conteudo %}
+<div class="cabecalho-pagina">
+  <h1>Responsáveis</h1>
+  <a class="botao botao-primario" href="{{ url_for('pais.responsavel_novo') }}">+ Novo responsável</a>
+</div>
+<ul class="lista">
+  {% for r in responsaveis %}
+    <li class="item {% if not r.ativo %}inativo{% endif %}">
+      <div class="item-texto">
+        <strong>{{ r.nome }}</strong>{% if r.id == current_user.id %} (você){% endif %}
+        <small>{{ r.email }}</small>
+        {% if r.ultimo_login_em %}<small>Último acesso: {{ r.ultimo_login_em | data_hora }}</small>{% endif %}
+      </div>
+      {% if r.id != current_user.id %}
+      <div class="item-acoes">
+        <form method="post" action="{{ url_for('pais.responsavel_alternar_ativo', responsavel_id=r.id) }}"
+              data-confirmar="{{ 'Desativar' if r.ativo else 'Reativar' }} o acesso de {{ r.nome }}?">
+          {{ form.hidden_tag() }}
+          <button class="botao" type="submit">{{ 'Desativar' if r.ativo else 'Reativar' }}</button>
+        </form>
+      </div>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

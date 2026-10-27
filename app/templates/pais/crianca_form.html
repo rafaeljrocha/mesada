@@ -1,0 +1,21 @@
+{% extends "pais/_layout.html" %}
+{% from "_macros.html" import campo, avatar %}
+{% block titulo %}{{ 'Editar' if crianca else 'Nova' }} criança{% endblock %}
+{% block conteudo %}
+<section class="cartao estreito">
+  <h1>{{ 'Editar ' ~ crianca.nome if crianca else 'Nova criança' }}</h1>
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {{ form.hidden_tag() }}
+    {{ campo(form.nome) }}
+    {{ campo(form.data_nascimento) }}
+    {% if crianca and crianca.foto %}
+      <div class="campo">{{ avatar(crianca) }}</div>
+      {{ campo(form.remover_foto) }}
+    {% endif %}
+    {{ campo(form.foto, accept="image/*", dica="A criança vai se reconhecer por esta foto. Os metadados (inclusive localização) são removidos no envio.") }}
+    {{ campo(form.cor_avatar, type="color", dica="Usada quando não há foto.") }}
+    <button class="botao botao-primario" type="submit">Salvar</button>
+    <a class="botao" href="{{ url_for('pais.criancas') }}">Cancelar</a>
+  </form>
+</section>
+{% endblock %}

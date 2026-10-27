@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block classe_body %}area-crianca{% endblock %}
+{% block topo %}
+<header class="topo-crianca">
+  {% block voltar %}{% endblock %}
+  <a class="botao-cadeado" href="{{ url_for('crianca.sair') }}" aria-label="Área dos pais (pede PIN)">🔒</a>
+</header>
+{% endblock %}

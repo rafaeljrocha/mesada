@@ -1,0 +1,30 @@
+{% extends "pais/_layout.html" %}
+{% from "_macros.html" import avatar %}
+{% block titulo %}Painel{% endblock %}
+{% block conteudo %}
+<div class="cabecalho-pagina">
+  <h1>Painel</h1>
+  <form method="post" action="{{ url_for('pais.ativar_modo_crianca') }}">
+    {{ form.hidden_tag() }}
+    <button class="botao botao-destaque" type="submit">Entregar à criança 🧒</button>
+  </form>
+</div>
+{% if not criancas %}
+  <section class="cartao">
+    <p>Nenhuma criança cadastrada ainda.</p>
+    <a class="botao botao-primario" href="{{ url_for('pais.crianca_nova') }}">Cadastrar criança</a>
+  </section>
+{% else %}
+  <div class="grade">
+    {% for c in criancas %}
+      <a class="cartao cartao-crianca" href="{{ url_for('pais.crianca_detalhe', crianca_id=c.id) }}">
+        {{ avatar(c) }}
+        <h2>{{ c.nome }}</h2>
+        <p class="saldo">⭐ {{ saldos[c.id]['PONTOS'] | pontos }}</p>
+        <p class="saldo">💰 {{ saldos[c.id]['BRL'] | brl }}</p>
+      </a>
+    {% endfor %}
+  </div>
+  <p class="dica">Tarefas, ocorrências e resgates entram neste painel nas próximas fases.</p>
+{% endif %}
+{% endblock %}

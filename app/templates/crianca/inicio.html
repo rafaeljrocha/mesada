@@ -1,0 +1,32 @@
+{% extends "crianca/_layout.html" %}
+{% from "_macros.html" import avatar %}
+{% block titulo %}{{ crianca.nome }}{% endblock %}
+{% block voltar %}
+  <a class="botao-voltar" href="{{ url_for('crianca.selecao') }}" aria-label="Trocar de criança">👥</a>
+{% endblock %}
+{% block conteudo %}
+<section class="crianca-topo">
+  {{ avatar(crianca, "avatar avatar-grande") }}
+  <h1 class="perfil-nome">{{ crianca.nome }}</h1>
+</section>
+
+{# Decisão 11: só representação visual, sem números. #}
+<section class="potes" aria-label="Meus potes">
+  <div class="pote pote-estrelas" role="img" aria-label="Pote de estrelas">
+    <div class="pote-icones">
+      {% for _ in range(estrelas.quantidade) %}<span aria-hidden="true">⭐</span>{% endfor %}
+      {% if estrelas.transborda %}<span aria-hidden="true" class="transborda">✨</span>{% endif %}
+    </div>
+    <div class="pote-rotulo" aria-hidden="true">🫙⭐</div>
+  </div>
+  <div class="pote pote-moedas" role="img" aria-label="Pote de moedas">
+    <div class="pote-icones">
+      {% for _ in range(moedas.quantidade) %}<span aria-hidden="true">🪙</span>{% endfor %}
+      {% if moedas.transborda %}<span aria-hidden="true" class="transborda">✨</span>{% endif %}
+    </div>
+    <div class="pote-rotulo" aria-hidden="true">🐷</div>
+  </div>
+</section>
+
+<p class="dica centro">As tarefas aparecem aqui a partir da Fase 2.</p>
+{% endblock %}

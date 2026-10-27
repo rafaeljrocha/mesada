@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block topo %}
+<header class="topo">
+  <a class="marca" href="{{ url_for('pais.painel') }}">⭐ Mesada</a>
+  <nav class="menu" aria-label="Menu principal">
+    <a href="{{ url_for('pais.painel') }}">Painel</a>
+    <a href="{{ url_for('pais.criancas') }}">Crianças</a>
+    <a href="{{ url_for('pais.responsaveis') }}">Responsáveis</a>
+    <a href="{{ url_for('pais.familia') }}">Família</a>
+    <a href="{{ url_for('pais.auditoria_lista') }}">Auditoria</a>
+    <form method="post" action="{{ url_for('auth.sair') }}" class="form-inline">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button class="link" type="submit">Sair</button>
+    </form>
+  </nav>
+</header>
+{% endblock %}

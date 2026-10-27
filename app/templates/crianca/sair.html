@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% from "_macros.html" import campo %}
+{% block titulo %}Área dos pais{% endblock %}
+{% block conteudo %}
+<section class="cartao estreito">
+  <h1>🔒 Área dos pais</h1>
+  <form method="post" novalidate>
+    {{ form.hidden_tag() }}
+    {{ campo(form.pin, inputmode="numeric", autocomplete="off", autofocus=True) }}
+    <button class="botao botao-primario" type="submit">Entrar</button>
+    <a class="botao" href="{{ url_for('crianca.selecao') }}">Voltar</a>
+  </form>
+</section>
+{% endblock %}

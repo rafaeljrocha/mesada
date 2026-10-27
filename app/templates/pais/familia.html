@@ -1,0 +1,57 @@
+{% extends "pais/_layout.html" %}
+{% from "_macros.html" import campo %}
+{% block titulo %}Família{% endblock %}
+{% block conteudo %}
+<h1>Família</h1>
+<div class="grade grade-larga">
+  <section class="cartao">
+    <h2>Dados</h2>
+    <form method="post" novalidate>
+      {{ familia_form.hidden_tag() }}
+      <input type="hidden" name="acao" value="familia">
+      {{ campo(familia_form.nome) }}
+      <button class="botao botao-primario" type="submit">Salvar</button>
+    </form>
+  </section>
+
+  <section class="cartao">
+    <h2>Regras da família</h2>
+    <form method="post" novalidate>
+      {{ config_form.hidden_tag() }}
+      <input type="hidden" name="acao" value="config">
+      {{ campo(config_form.permite_saldo_negativo, dica="Desligado: uma penalidade só desconta até zerar o saldo.") }}
+      {{ campo(config_form.advertencias_antes_penalidade, min=0, max=10, dica="Quantas advertências no mesmo dia antes de a penalidade valer. 0 = penalidade direta.") }}
+      {{ campo(config_form.penalidade_max_diaria_pontos, min=1, inputmode="numeric") }}
+      {{ campo(config_form.penalidade_max_diaria_brl, inputmode="decimal", autocomplete="off") }}
+      {{ campo(config_form.som_ativo) }}
+      <button class="botao botao-primario" type="submit">Salvar regras</button>
+    </form>
+  </section>
+
+  <section class="cartao">
+    <h2>PIN parental</h2>
+    <p class="dica">Um único PIN para a família. Ele é pedido para sair da tela da criança.</p>
+    <form method="post" novalidate>
+      {{ pin_form.hidden_tag() }}
+      <input type="hidden" name="acao" value="pin">
+      {{ campo(pin_form.senha_atual, autocomplete="current-password") }}
+      {{ campo(pin_form.pin, inputmode="numeric", autocomplete="off") }}
+      {{ campo(pin_form.confirmar_pin, inputmode="numeric", autocomplete="off") }}
+      <button class="botao botao-primario" type="submit">Trocar PIN</button>
+    </form>
+  </section>
+
+  <section class="cartao">
+    <h2>Minha senha</h2>
+    <form method="post" novalidate>
+      {{ senha_form.hidden_tag() }}
+      <input type="hidden" name="acao" value="senha">
+      {{ campo(senha_form.senha_atual, autocomplete="current-password") }}
+      {{ campo(senha_form.senha, autocomplete="new-password") }}
+      {{ campo(senha_form.confirmar_senha, autocomplete="new-password") }}
+      <button class="botao botao-primario" type="submit">Trocar senha</button>
+    </form>
+  </section>
+</div>
+<p class="dica creditos">Ícones padrão (a partir da Fase 2): OpenMoji — the open-source emoji and icon project. Licença CC BY-SA 4.0.</p>
+{% endblock %}

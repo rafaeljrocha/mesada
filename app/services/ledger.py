@@ -189,7 +189,7 @@ def estornar(*, familia_id: int, lancamento_id: int, autor_id: int | None, motiv
     - Um lançamento só pode ser estornado uma vez (UNIQUE em estorno_de_id).
     - Estorno de estorno não é permitido.
     - Estorno não é bloqueado pelo piso zero: é correção de erro (ver
-      pendência P7 em docs/decisoes.md).
+      decisão P7 em docs/decisoes.md).
     """
     motivo = (motivo or "").strip()
     if not motivo:

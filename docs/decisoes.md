@@ -32,9 +32,11 @@ Itens marcados **PROVISÓRIO** ainda não foram decididos e serão implementados
 | P5 | Expiração de tarefa com janela | **No fim da janela** | Sem janela: meia-noite (America/Sao_Paulo). |
 | P6 | Fluxo Git | **Uma PR por fase** | O responsável revisa e mescla pela interface web. |
 
-## Pendências abertas na Fase 1 (PROVISÓRIO até resposta)
+## Decisões da revisão da Fase 1 (2026-10-27)
 
-| # | Pergunta | Comportamento provisório implementado |
-|---|----------|----------------------------------------|
-| P7 | O **estorno** de um crédito pode deixar o saldo negativo (ex.: crédito de 5 estrelas já gasto em um prêmio, depois estornado por ter sido aprovado por engano)? | **Sim.** O estorno é correção de erro e não é bloqueado pelo piso zero. O ponto está isolado em `ledger.estornar()`. |
-| P8 | Quantas advertências antes da penalidade (valor do padrão global, decisão 5)? | **1**, editável em Família → Regras da família. |
+| # | Pergunta | Escolha | Consequência técnica |
+|---|----------|---------|----------------------|
+| P7 | O estorno de um crédito pode deixar o saldo negativo? | **Sim** | O estorno é correção de erro e não passa pelo piso zero (`ledger.estornar()`). |
+| P8 | Quantas advertências antes da penalidade (padrão global, decisão 5)? | **1** | Valor inicial de `advertencias_antes_penalidade`, editável em Família → Regras da família. |
+
+Não há pendências de produto abertas.

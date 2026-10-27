@@ -56,7 +56,7 @@ class ConfiguracaoFamilia(db.Model):
     )
     # Decisão 4: piso zero (False). Mantido configurável conforme seção 6.3.
     permite_saldo_negativo: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
-    # Decisão 5: padrão global de advertências (valor inicial provisório).
+    # Decisão 5: padrão global de advertências (P8: valor inicial 1).
     advertencias_antes_penalidade: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     # Seção 6.3: limites diários por criança; NULL = sem limite.
     penalidade_max_diaria_brl: Mapped[Decimal | None] = mapped_column(Numeric(10, 2))
